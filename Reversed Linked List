@@ -1,0 +1,24 @@
+struct ListNode{
+    int m_nKey;
+    ListNode* next;
+}
+
+ListNode* reverseList(ListNode* pHead){
+    ListNode* pReversedHead = nullptr;
+    ListNode* pNode = pHead;
+    ListNode* pPrev = nullptr;
+    
+    while(pNode != nullptr){
+        ListNode* pNext = pNode->next;
+        if(pNext == nullptr)
+        {
+            pReversedHead = pNode;
+        }
+        
+        pNode->next = prev;
+        pPrev = pNode;
+        pNode = pNext;
+    }
+    
+    return pReversedHead;
+};
