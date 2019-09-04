@@ -1,0 +1,70 @@
+Given a binary tree, return the postordertraversal of its nodes' values.
+
+Example:
+
+Input: [1,null,2,3]
+   1
+    \
+     2
+    /
+   3
+
+Output: [3,2,1]
+
+
+typedef struct BiTreeNode
+{
+    ElemType data;
+    struct BiTreeNode *left;
+    struct BiTreeNode *right;
+}BiTreeNode,*BiTree;
+
+Binary Tree PostOrder Traversal
+
+void postOrderBiTree(BiTree T){
+    if(T == NULL) return;
+    postOrderBiTree(T->left);
+    postOrderBiTree(T->right);
+    printf("%c",T->data);
+}
+
+
+class Solution{
+public:
+    vector<int> postOrderTraversal(TreeNode* root){
+        if(!root) return {};
+        vector<int> res;
+        stack<TreeNode*> s{{root}};
+        
+        while(!s.empty()){
+            TreeNode* t = s.top();s.pop();
+            res.insert(res.begin(),t->val);
+            if(t->left) s.push(t->left);
+            if(t->right) s.push(t->right);
+        }
+        return res;
+    }
+};
+
+
+
+class Solution{
+    public:
+        vector<int> postOrderTraversal(TreeNode* root){
+            vector<int> res;
+            stack<TreeNode*> s;
+            TreeNode* p = root;
+            while(!s.empty() || p){
+                if(p){
+                    s.push(p);
+                    res.insert(res.begin(),p->val);
+                    p = p->right;
+                }
+                else{
+                    TreeNode* t = s.top();s.pop();
+                    p = t->left;
+                }
+            }
+            return res;
+        }
+};
