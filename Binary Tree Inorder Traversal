@@ -1,0 +1,56 @@
+typedef char ElemType;
+typedef struct BiTreeNode
+{
+    ElemType data;
+    struct BiTreeNode *left;
+    struct BiTreeNode *right;
+}BiTreeNode,*BiTree;
+
+Binary Tree Inorder Traversal
+
+void InorderBiTree(BiTree T){
+    if(T == NULL)
+          return;
+    InorderBiTree(T->left);
+    printf("%c",T->data);
+    InorderBiTree(T->right);
+}
+
+//recursion
+class Solution{
+public:
+    vector<int> inorderTraversal(TreeNode *root){
+        vector<int> res;
+        inorder(root,res);
+        return res;
+    }
+    
+    void inorder(TreeNode* root, vector<int> &res){
+        if(!root) return;
+        if(root->left) inorder(root->left,res);
+        res.push_back(root->val);
+        ir(root->right) inorder(root->right,res);
+    }
+};
+
+//no recursion
+class Solution{
+    public:
+        vector<int> inorderTraversal(TreeNode* root){
+            vector<int> res;
+            stack<TreeNode*> s;
+            TreeNode*p = root;
+            while(!s.empty() || p){
+                if(p){
+                    s.push(p);
+                    p = p->left;
+                }
+                else{
+                    TreeNode* t = s.top();s.pop();
+                    res.push_back(t->val);
+                    p = t->right;
+                }
+            }
+            return res;
+        }
+};
