@@ -43,7 +43,70 @@ public class Solution {
 
 - [(2)字符串中的第一个唯一字符](/src/hash相关/q387_字符串中的第一个唯一字符)
 
+```java
+//字符串中的第一个唯一字符
+//给定一个字符串，找到它的第一个不重复的字符，并返回它的索引。如果不存在，则返回 -1。
+//示例：
+//s = “leetcode” 返回 0 ;
+// s = “loveleetcode”  返回 2
+//提示：你可以假定该字符串只包含小写字母。
 
+/*
+解题思路：#
+很简单的题，无非就是对字符串的字母进行频率统计，找到出现频率为1 的字母索引。
+借助哈希映射两次遍历完成。第一次遍历进行字母频率统计，Hash Map 的Key 为字母，
+Value 为出现频率。第二次遍历找到频率为 1 的字母索引返回即可。
+不同于单词频率统计，字母一共只有 26 个，所以可以直接利用 ASii 码表里小写字母数值从 97～122，
+直接用 int 型数组映射。建立映射：索引为 小写字母的 ASii 码值，存储值为出现频率。
+ */
+class Solution{
+    public int firstUniqChar(String s){
+        char[] chars = s.toCharArray();//转成char数组
+        Map<Character,Integer> map = new HashMap<>();
+        for(Character c: chars) map.put(c,map.getOrDefault(c,0) + 1);//频率统计
+        for(int i = 0; i < chars.length; i++){
+            if(map.get(chars[i]) == 1) return i;
+        }
+        return -1;
+    }
+}
+
+//Solution2 : 数组映射解题
+class Solution2{
+    public int firstUniqChar(String s){
+        char[] chars = s.toCharArray();
+        int base = 97;
+        int[] loc = new int[26];
+        for(char c: chars) loc[c-base] += 1;
+        for(int i = 0; i < chars.length; i++)
+        {
+            if(loc[chars[i] - base] == 1)
+                return i;
+        }
+        return -1;
+    }
+}
+
+//Solution3:利用字符串集成操作函数解题，效率高巧妙
+/*
+indexOf():返回元素第一次出现的索引，没有则返回-1
+lastIndexOf():返回元素最后一次出现的索引，没有则返回-1
+ */
+class Solution3{
+    public int firstUniqChar(String s){
+        int res = s.length();
+        for(int i = 'a'; i <= 'z'; i++){
+            int firstIndex = s.indexOf((char)i);
+            if(firstIndex == -1) continue;
+            int lastIndex = s.lastIndexOf((char)i);
+            if(firstIndex == lastIndex){
+                res = Math.min(firstIndex,res);
+            }
+        }
+        return res == s.length() ? -1 : res;
+    }
+}
+```
 
 
 # 链表操作
