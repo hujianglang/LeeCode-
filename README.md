@@ -226,7 +226,55 @@ public class Solution {
 
 - [q206_反转链表](/src/链表操作/q206_反转链表)
 
+```java
+class ListNode{
+    int val;
+    ListNode next;
+    ListNode(int x){
+        val = x;
+    }
+}
+//Solution0 递归法
+/*
+总体来说，递归法是从最后一个Node开始，在弹栈的过程中将指针顺序置换的。
+递归实质上就是系统帮你压栈的过程，系统在压栈的时候会保留现场。
+我们来看是怎样的一个递归过程：0->2->3->4
+程序到达Node newHead = reverse(head.next);时进入递归
+我们假设此时递归到了2结点，此时head=3结点，temp=3结点.next(实际上是4结点)
+执行Node newHead = reverse(head.next);传入的head.next是3结点，返回的newHead是4结点。
+接下来就是弹栈过程了
+程序继续执行 temp.next = head就相当于3->3
+head.next = null 即把2结点指向4结点的指针断掉。
+返回新链表的头结点newHead
+注意：当retuen后，系统会恢复1结点压栈时的现场，此时的head=2结点；temp=2结点.next(3结点)，再进行上述的操作。最后完成整个链表的翻转。
+ */
+class Solution0{
+    public ListNode reverseList(ListNode head){
+        if(head == null || head.next == null)
+            return head;
 
+        ListNode p = reverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return p;
+    }
+}
+
+//Solution1 遍历法
+class Solution1{
+    public ListNode reverseList(ListNode node){
+        ListNode pre = null;
+        ListNode next = null;
+        while(node != null){
+            next = node.next;
+            node.next = pre;
+            pre = node;
+            node = next;
+        }
+        return pre;
+    }
+}
+```
 
 # 双指针遍历/滑动窗口
 
