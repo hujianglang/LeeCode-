@@ -260,6 +260,18 @@ class Solution0{
     }
 }
 
+class Solution1{
+    public ListNode reverse(ListNode head){
+        if(head == null || head.next == null)
+            return head;
+        ListNode temp = head.next;
+        ListNode newHead = reverse(head.next);
+        temp.next = head;
+        head.next = null;
+        return newHead;
+    }
+}
+
 //Solution1 遍历法
 class Solution1{
     public ListNode reverseList(ListNode node){
