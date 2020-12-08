@@ -217,8 +217,50 @@ public class Solution {
 
 
 - [q25_k个一组翻转链表](/src/链表操作/q25_k个一组翻转链表)
+https://leetcode-cn.com/problems/reverse-nodes-in-k-group/solution/k-ge-yi-zu-fan-zhuan-lian-biao-by-leetcode-solutio/
+```Java
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode hair = new ListNode(0);
+        hair.next = head;
+        ListNode pre = hair;
 
+        while (head != null) {
+            ListNode tail = pre;
+            // 查看剩余部分长度是否大于等于 k
+            for (int i = 0; i < k; ++i) {
+                tail = tail.next;
+                if (tail == null) {
+                    return hair.next;
+                }
+            }
+            ListNode nex = tail.next;
+            ListNode[] reverse = myReverse(head, tail);
+            head = reverse[0];
+            tail = reverse[1];
+            // 把子链表重新接回原链表
+            pre.next = head;
+            tail.next = nex;
+            pre = tail;
+            head = tail.next;
+        }
 
+        return hair.next;
+    }
+    //用小例子辅助理解，画图理解；先改变节点的连接方式，然后返回首尾节点即可
+    public ListNode[] myReverse(ListNode head, ListNode tail) {
+        ListNode prev = tail.next;
+        ListNode p = head;
+        while (prev != tail) {
+            ListNode nex = p.next;
+            p.next = prev;
+            prev = p;
+            p = nex;
+        }
+        return new ListNode[]{tail, head};
+    }
+}
+```
 - [q61_旋转链表](/src/链表操作/q61_旋转链表)   
 https://leetcode-cn.com/problems/rotate-list/solution/xuan-zhuan-lian-biao-by-leetcode/   
 给定一个链表，旋转链表，将链表每个节点向右移动 k 个位置，其中 k 是非负数。  
