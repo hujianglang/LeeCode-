@@ -216,7 +216,7 @@ public class Solution {
 ```
 
 
-- [q25_k个一组翻转链表](/src/链表操作/q25_k个一组翻转链表)
+- [q25_k个一组翻转链表](/src/链表操作/q25_k个一组翻转链表)               
 https://leetcode-cn.com/problems/reverse-nodes-in-k-group/solution/k-ge-yi-zu-fan-zhuan-lian-biao-by-leetcode-solutio/
 ```Java
 class Solution {
